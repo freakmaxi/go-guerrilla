@@ -90,20 +90,6 @@ var loggers struct {
 	sync.Mutex
 }
 
-func SetLogger(logger Logger) {
-	if logger == nil {
-		return
-	}
-
-	loggers.Lock()
-	defer loggers.Unlock()
-	key := loggerKey{logger.GetLogDest(), logger.GetLevel()}
-	if loggers.cache == nil {
-		loggers.cache = make(loggerCache)
-	}
-	loggers.cache[key] = logger
-}
-
 // GetLogger returns a struct that implements Logger (i.e HookedLogger) with a custom hook.
 // It may be new or already created, (ie. singleton factory pattern)
 // The hook has been initialized with dest

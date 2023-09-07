@@ -45,14 +45,6 @@ func (d *Daemon) Start() (err error) {
 		if err = d.configureDefaults(); err != nil {
 			return err
 		}
-		if d.Logger == nil {
-			d.Logger, err = log.GetLogger(d.Config.LogFile, d.Config.LogLevel)
-			if err != nil {
-				return err
-			}
-		} else {
-			log.SetLogger(d.Logger)
-		}
 		if d.Backend == nil {
 			d.Backend, err = backends.New(d.Config.BackendConfig, d.Logger)
 			if err != nil {
@@ -63,6 +55,13 @@ func (d *Daemon) Start() (err error) {
 		if err != nil {
 			return err
 		}
+		if d.Logger == nil {
+			d.Logger, err = log.GetLogger(d.Config.LogFile, d.Config.LogLevel)
+			if err != nil {
+				return err
+			}
+		}
+		d.g.SetLogger(d.Logger)
 		for i := range d.subs {
 			_ = d.Subscribe(d.subs[i].topic, d.subs[i].fn)
 
