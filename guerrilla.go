@@ -7,8 +7,8 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/flashmob/go-guerrilla/backends"
-	"github.com/flashmob/go-guerrilla/log"
+	"github.com/freakmaxi/go-guerrilla/backends"
+	"github.com/freakmaxi/go-guerrilla/log"
 )
 
 const (
