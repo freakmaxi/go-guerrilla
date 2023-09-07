@@ -642,7 +642,7 @@ func (s *server) handleClient(client *client) {
 }
 
 func (s *server) log() log.Logger {
-	return s.loadLog(&s.logStore)
+	return s.mainlog()
 }
 
 func (s *server) mainlog() log.Logger {
