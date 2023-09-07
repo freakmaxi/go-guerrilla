@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/flashmob/go-guerrilla/backends"
-	"github.com/flashmob/go-guerrilla/log"
+	"github.com/freakmaxi/go-guerrilla/backends"
+	"github.com/freakmaxi/go-guerrilla/log"
 	"io/ioutil"
 	"time"
 )
@@ -50,6 +50,8 @@ func (d *Daemon) Start() (err error) {
 			if err != nil {
 				return err
 			}
+		} else {
+			log.SetLogger(d.Logger)
 		}
 		if d.Backend == nil {
 			d.Backend, err = backends.New(d.Config.BackendConfig, d.Logger)
@@ -231,6 +233,10 @@ func (d *Daemon) configureDefaults() error {
 // then attaches to the logs once the config is loaded.
 // This will propagate down to the servers / backend too.
 func (d *Daemon) resetLogger() error {
+	if d.Logger != nil {
+		return nil
+	}
+
 	l, err := log.GetLogger(d.Config.LogFile, d.Config.LogLevel)
 	if err != nil {
 		return err
